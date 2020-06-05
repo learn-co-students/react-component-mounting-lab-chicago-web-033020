@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 
-class Timer extends Component {
+export default class Timer extends Component {
   state = {
     time: 0,
     color: "#" + Math.floor(Math.random() * 16777215).toString(16)
   };
 
   // add your code here
+  componentDidMount() {
+    this.interval = setInterval(this.clockTick, 1000)
+  }
+
+  componentWillUnmount() {
+    this.stopClock()
+  }
 
   render() {
     const { time, color } = this.state;
@@ -18,9 +25,8 @@ class Timer extends Component {
         <small onClick={this.handleClose}>X</small>
       </section>
     );
-  }
-
-  //clock functions
+  } 
+   //clock functions
   clockTick = () => {
     this.setState(prevState => ({
       time: prevState.time + 1
@@ -35,6 +41,5 @@ class Timer extends Component {
   handleClose = () => {
     this.props.removeTimer(this.props.id);
   };
-}
 
-export default Timer;
+}
